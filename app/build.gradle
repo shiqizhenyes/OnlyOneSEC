@@ -15,9 +15,20 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        release {
+            Properties properties = getProperties('key.properties')
+            storeFile file(getProperty(properties, 'storeFile'))
+            keyAlias getProperty(properties, 'keyAlias')
+            storePassword getProperty(properties, 'storePassword')
+            keyPassword getProperty(properties, 'keyPassword')
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {
@@ -43,6 +54,18 @@ android {
     }
 }
 
+def getProperties(String fileName) {
+    final Properties properties = new Properties()
+    def file = rootProject.file(fileName)
+    if (file.exists()) {
+        file.withInputStream { stream -> properties.load(stream) }
+    }
+    return properties
+}
+
+static def getProperty(Properties properties, String name) {
+    return properties.getProperty(name) ?: "$name missing"
+}
 dependencies {
 
     testImplementation 'junit:junit:4.13.2'
