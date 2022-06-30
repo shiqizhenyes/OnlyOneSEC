@@ -8,4 +8,5 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="ic_launcher_background">#1F4BC7</color>
+    <color name="baidu_netdisk_svip_background">#272728</color>
 </resources>
